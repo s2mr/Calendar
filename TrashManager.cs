@@ -5,16 +5,14 @@ namespace Calendar
 {
 	public class TrashManager
 	{
-		DateTime date;
-		public TrashManager(DateTime date)
+		public TrashManager()
 		{
-			this.date = date;
 		}
 
-		public string GetLabelKindOfTrash()
+		public Label GetLabelKindOfTrash()
 		{
+			var date = DateTime.Now;
 			string kind = "";
-
 			switch (date.DayOfWeek)
 			{
 				case DayOfWeek.Monday:
@@ -67,7 +65,7 @@ namespace Calendar
 			label.FontSize = 70;
 			label.HorizontalTextAlignment = TextAlignment.Center;
 			label.VerticalTextAlignment = TextAlignment.Center;
-			return kind + "の日";
+			return label;
 		}
 	}
 

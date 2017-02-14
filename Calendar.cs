@@ -15,28 +15,17 @@ namespace Calendar
 		Label dayOfWeekLabel;
 		Label trashLabel;
 
-		ForecastManager fm;
-
 		public App()
 		{
-			var dm = new DateManager(DateTime.Now);
-			var tm = new TrashManager(DateTime.Now);
+			var dm = new DateManager();
+			var tm = new TrashManager();
 
 			timeLabel = TitleLabel(dm.GetTimeString(), Color.Pink);
-			trashLabel = new Label
-			{
-				FontSize = 70,
-				VerticalTextAlignment = TextAlignment.Center,
-				HorizontalTextAlignment = TextAlignment.Center,
-				BackgroundColor = Color.White,
-				Opacity = 0.4
-			};
-			//var timeLabel = new Label();
+			trashLabel = tm.GetLabelKindOfTrash();
 
 
 			Device.StartTimer(new TimeSpan(10000 * 500), () =>
 			{
-			string trash = tm.GetLabelKindOfTrash();
 				string year = dm.GetYearStr() + "年";
 				string date = dm.GetMonthStr() + "月" + dm.GetDayStr() + "日";
 				string time = dm.GetTimeString();
@@ -45,7 +34,7 @@ namespace Calendar
 				dateLabel.Text = date;
 				dayOfWeekLabel.Text = dayOfWeek;
 				timeLabel.Text = time;
-				trashLabel.Text = trash;
+				trashLabel = tm.GetLabelKindOfTrash();
 				return true;
 			});
 
@@ -82,15 +71,10 @@ namespace Calendar
 			grid.Children.Add(dateLabel, 0, 1);//0行1列
 			grid.Children.Add(dayOfWeekLabel, 0, 2);//0行1列
 
-			var cvm = new ClockViewModel();
-
 			//var timeLabel2 = new Label();
 			//timeLabel2.BindingContext = cvm;
 			//timeLabel2.SetBinding(Label.TextProperty, "Time");
 
-
-			timeLabel.BindingContext = new ClockViewModel();
-			timeLabel.SetBinding(Label.TextProperty, "{Binding MyDateTime, StringFormat='{0:T}'}");
 
 
 			grid.Children.Add(timeLabel, 0, 3);//0行1列
@@ -99,7 +83,7 @@ namespace Calendar
 			grid.Children.Add(trashLabel, 1, 1);//２列目で左から３カラム目
 			grid.Children.Add(TitleLabel("降水確率", Color.Orange), 1, 2);//0行1列
 			grid.Children.Add(maxTempLabel, 2, 2);//0行1列
-			grid.Children.Add(TitleLabel("７０%", Color.Lime), 1, 3);//0行1列
+			grid.Children.Add(TitleLabel("???%", Color.Lime), 1, 3);//0行1列
 			grid.Children.Add(minTempLabel, 2, 3);//0行1列
 
 			Grid.SetColumnSpan(label1, 2);
@@ -110,7 +94,7 @@ namespace Calendar
 			contentPage.BackgroundImage = "bg.jpg";
 			contentPage.Content = grid;
 
-			getWeather();
+			makeAsync();
 
 			MainPage = contentPage;
 		}
@@ -130,9 +114,9 @@ namespace Calendar
 		{
 		}
 
-		private async Task makeAsync()
+		private void makeAsync()
 		{
-			await getWeather();
+		 getWeather();
 		}
 
 		protected Label TitleLabel(String title, Color color)
@@ -150,16 +134,18 @@ namespace Calendar
 			return label;
 		}
 
-		private async Task getWeather()
+		private async void getWeather()
 		{
-			fm = new ForecastManager();
-			await fm.AsyncGetWebAPIData();
-
-			string max = string.Format("最高{0}℃", fm.getMaxTemperature());
-			//string min = string.Format("最高{0}℃", fm.getMinTemperature());
+			
+		 	await ForecastManager.AsyncGetWebAPIData();
+			double maxValue = ForecastManager.getMaxTemperature();
+			double minValue = ForecastManager.getMinTemperature();
+			string max = string.Format("最高{0}℃", maxValue.ToString("F2"));
+			string min = string.Format("最高{0}℃", minValue.ToString("F2"));
 
 			maxTempLabel.Text = max;
-			//minTempLabel.Text = min;
+			minTempLabel.Text = min;
+			return;
 		}
 	}
 }

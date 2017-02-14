@@ -6,80 +6,80 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace Calendar
 {
-	public class ForecastManager
+	public static class ForecastManager
 	{
 
-		Item item;
+	   static Item item;
 
-		string weather { get; set; }
+		//string weather { get; set; }
 
-		public double minTemperature
+		//public double minTemperature
+		//{
+		//	get
+		//	{
+		//		var dict = item.list[2]["main"] as Dictionary<String, String>;
+		//		string str = dict["temp_min"];
+		//		double doubleVal = Convert.ToDouble(str);
+
+		//		return doubleVal - 273.15;
+		//	}
+		//}
+
+		//public double maxTemperature
+		//{
+		//	get
+		//	{
+		//		var dict = item.list[2]["main"] as Dictionary<String, String>;
+		//		string str = dict["temp_max"];
+		//		double doubleVal = Convert.ToDouble(str);
+
+		//		return doubleVal - 273.15;
+		//	}
+		//}
+
+		public static double getMinTemperature()
 		{
-			get
-			{
-				var dict = item.list[2]["main"] as Dictionary<String, String>;
-				string str = dict["temp_min"];
-				double doubleVal = Convert.ToDouble(str);
-
-				return doubleVal - 273.15;
-			}
-		}
-
-		public double maxTemperature
-		{
-			get
-			{
-				var dict = item.list[2]["main"] as Dictionary<String, String>;
-				string str = dict["temp_max"];
-				double doubleVal = Convert.ToDouble(str);
-
-				return doubleVal - 273.15;
-			}
-		}
-
-		public ForecastManager()
-		{
-		}
-
-		public double getMinTemperature()
-		{
-			var dict = item.list[2]["main"] as Dictionary<String, String>;
-			string str = dict["temp_min"];
-			double doubleVal = Convert.ToDouble(str);
+			JObject dict = item.list[2]["main"] as JObject;
+			var dict2 = dict.ToObject<Dictionary<String, String>>();
+			var dict3 = dict2["temp_min"];
+			double doubleVal = Convert.ToDouble(dict3);
 
 			return doubleVal - 273.15;
 		}
 
-		public double getMaxTemperature()
+		public static double getMaxTemperature()
 		{
-			var dict = item.list[2]["main"];
-			var dict2 = dict as IDictionary<String, String>;
-			string str = dict2["temp_max"];
-			double doubleVal = Convert.ToDouble(str);
+			JObject dict = item.list[2]["main"] as JObject;
+			var dict2 = dict.ToObject<Dictionary<String, String>>();
+			var dict3 = dict2["temp_max"];
+			double doubleVal = Convert.ToDouble(dict3);
 
 			return doubleVal - 273.15;
 		}
 
 		// データを取得するメソッド
-		public async Task AsyncGetWebAPIData()
+		public static async Task AsyncGetWebAPIData()
 		{
 			string apiKey = "8d1d292024c6d285eeb507da0ffd0ef9";
 
 			//string AED_URL = "http://weather.livedoor.com/forecast/webservice/json/v1?city=030010";
 
-			string weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/city?id=2110657&APPID=8d1d292024c6d285eeb507da0ffd0ef9";
+			string newUrl = "http://samples.openweathermap.org/data/2.5/forecast?id=2110657&appid=b1b15e88fa797225412429c1c50c122a1";
+			//string weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/city?id=2110657&APPID=8d1d292024c6d285eeb507da0ffd0ef9";
 			// HttpClientの作成 
 			HttpClient httpClient = new HttpClient();
 			// 非同期でAPIからデータを取得
-			Task<string> stringAsync = httpClient.GetStringAsync(weatherUrl);
+			Task<string> stringAsync = httpClient.GetStringAsync(newUrl);
 			string result = await stringAsync;
 			// JSON形式のデータをデシリアライズ
 
 			item = JsonConvert.DeserializeObject<Item>(result);
 
-			Debug.WriteLine(item.list[2]["main"]);
+			//	Debug.WriteLine(item.list[2]["main"]);
 			//Debug.WriteLine(item.forecasts[0]["temperature"]);
 			//Debug.WriteLine(item.forecasts[0]["date"]);
 
@@ -92,6 +92,6 @@ namespace Calendar
 	{
 
 		[JsonProperty(PropertyName = "list")]
-		public IDictionary<String, Object>[] list { get; set; }
+		 public IDictionary<String, Object>[] list { get; set; }
 	}
 }

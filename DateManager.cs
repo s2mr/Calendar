@@ -3,56 +3,51 @@ namespace Calendar
 {
 	public class DateManager
 	{
-		int year;
-		int month;
-		int day;
-		DayOfWeek dayOfWeek;
-		DateTime date;
-
-
-		public DateManager(DateTime date)
+		public DateManager()
 		{
-			this.year = date.Year;
-			this.month = date.Month;
-			this.day = date.Day;
-			this.dayOfWeek = date.DayOfWeek;
-			this.date = date;
 		}
 
 		public string GetYearStr()
 		{
-			return year.ToString();
+			var date = DateTime.Now;
+			return date.Year.ToString();
 		}
 
 		public string GetMonthStr()
 		{
-			return month.ToString();
+			var date = DateTime.Now;
+			return date.Month.ToString();
 		}
 
 		public string GetDayStr()
 		{
-			return day.ToString();
+			var date = DateTime.Now;
+			return date.Day.ToString();
 		}
 
 		public int GetYearInt()
 		{
-			return year;
+			var date = DateTime.Now;
+			return date.Year;
 		}
 
 		public int GetMonthInt()
 		{
-			return month;
+			var date = DateTime.Now;
+			return date.Month;
 		}
 
 		public int GetDayInt()
 		{
-			return day;
+			var date = DateTime.Now;
+			return date.Day;
 		}
 
 		public string GetDayOfWeekStr()
 		{
+			var date = DateTime.Now;
 			string dayStr = "";
-			switch (this.dayOfWeek)
+			switch (date.DayOfWeek)
 			{
 				case DayOfWeek.Sunday:
 					dayStr = "日";

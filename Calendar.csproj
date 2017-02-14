@@ -33,7 +33,6 @@
     <Compile Include="DateManager.cs" />
     <Compile Include="TrashManager.cs" />
     <Compile Include="ForecastManager.cs" />
-    <Compile Include="ClockViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
