@@ -43,7 +43,7 @@ namespace Calendar
 
 		public static double getMinTemperature()
 		{
-			JObject dict = item.list[2]["main"] as JObject;
+			JObject dict = item.list[5]["main"] as JObject;
 			var dict2 = dict.ToObject<Dictionary<String, String>>();
 			var dict3 = dict2["temp_min"];
 			double doubleVal = Convert.ToDouble(dict3);
@@ -53,7 +53,7 @@ namespace Calendar
 
 		public static double getMaxTemperature()
 		{
-			JObject dict = item.list[2]["main"] as JObject;
+			JObject dict = item.list[3]["main"] as JObject;
 			var dict2 = dict.ToObject<Dictionary<String, String>>();
 			var dict3 = dict2["temp_max"];
 			double doubleVal = Convert.ToDouble(dict3);
@@ -68,7 +68,7 @@ namespace Calendar
 
 			//string AED_URL = "http://weather.livedoor.com/forecast/webservice/json/v1?city=030010";
 
-			string newUrl = "http://samples.openweathermap.org/data/2.5/forecast?id=2110657&appid=b1b15e88fa797225412429c1c50c122a1";
+			string newUrl = "http://api.openweathermap.org/data/2.5/forecast?id=2111834&appid=8d1d292024c6d285eeb507da0ffd0ef9";
 			//string weatherUrl = "http://api.openweathermap.org/data/2.5/forecast/city?id=2110657&APPID=8d1d292024c6d285eeb507da0ffd0ef9";
 			// HttpClientの作成 
 			HttpClient httpClient = new HttpClient();
@@ -79,11 +79,11 @@ namespace Calendar
 
 			item = JsonConvert.DeserializeObject<Item>(result);
 
-			//	Debug.WriteLine(item.list[2]["main"]);
+				Debug.WriteLine(item.list[2]["main"]);
 			//Debug.WriteLine(item.forecasts[0]["temperature"]);
 			//Debug.WriteLine(item.forecasts[0]["date"]);
 
-			//Debug.WriteLine(JsonConvert.DeserializeObject(result).ToString());
+			Debug.WriteLine(JsonConvert.DeserializeObject(result).ToString());
 			return;
 		}
 	}
