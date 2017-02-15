@@ -14,6 +14,7 @@ namespace Calendar
 		Label dateLabel;
 		Label dayOfWeekLabel;
 		Label trashLabel;
+		Image weatherImage;
 
 		public App()
 		{
@@ -22,9 +23,15 @@ namespace Calendar
 
 			timeLabel = TitleLabel(dm.GetTimeString(), Color.Pink);
 			trashLabel = tm.GetLabelKindOfTrash();
+			weatherImage = new Image
+			{
+				BackgroundColor = Color.White,
+				Opacity = 0.4
+			};
+			//weatherLabel = TitleLabel("???", Color.Lime);
 
 
-			Device.StartTimer(new TimeSpan(10000 * 500), () =>
+			Device.StartTimer(TimeSpan.FromSeconds(1), () =>
 			{
 				string year = dm.GetYearStr() + "年";
 				string date = dm.GetMonthStr() + "月" + dm.GetDayStr() + "日";
@@ -35,6 +42,12 @@ namespace Calendar
 				dayOfWeekLabel.Text = dayOfWeek;
 				timeLabel.Text = time;
 				trashLabel = tm.GetLabelKindOfTrash();
+				return true;
+			});
+
+			Device.StartTimer(TimeSpan.FromHours(2), () =>
+			{
+				getWeather();
 				return true;
 			});
 
@@ -81,9 +94,9 @@ namespace Calendar
 
 			grid.Children.Add(label1, 1, 0); //２列目で左から１~２カラム
 			grid.Children.Add(trashLabel, 1, 1);//２列目で左から３カラム目
-			grid.Children.Add(TitleLabel("降水確率", Color.Orange), 1, 2);//0行1列
+			grid.Children.Add(TitleLabel("天気", Color.Orange), 1, 2);//0行1列
 			grid.Children.Add(maxTempLabel, 2, 2);//0行1列
-			grid.Children.Add(TitleLabel("???%", Color.Lime), 1, 3);//0行1列
+			grid.Children.Add(weatherImage, 1, 3);//0行1列
 			grid.Children.Add(minTempLabel, 2, 3);//0行1列
 
 			Grid.SetColumnSpan(label1, 2);
@@ -143,6 +156,9 @@ namespace Calendar
 			string max = string.Format("最高{0}℃", maxValue.ToString("F2"));
 			string min = string.Format("最高{0}℃", minValue.ToString("F2"));
 
+
+
+			weatherImage.Source = ForecastManager.getWeatherIconName();
 			maxTempLabel.Text = max;
 			minTempLabel.Text = min;
 			return;

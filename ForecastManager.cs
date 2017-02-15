@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Xamarin.Forms;
 
 namespace Calendar
 {
@@ -61,6 +62,17 @@ namespace Calendar
 			return doubleVal - 273.15;
 		}
 
+		public static string getWeatherIconName()
+		{
+			var dict = item.list[2]["weather"] as JArray;
+			var dict2 = dict[0].ToObject<Dictionary<String, Object>>();
+			var str = dict2["icon"].ToString();
+
+			return String.Format("http://openweathermap.org/img/w/{0}.png", str);
+
+			//return str;
+		}
+
 		// データを取得するメソッド
 		public static async Task AsyncGetWebAPIData()
 		{
@@ -80,10 +92,9 @@ namespace Calendar
 			item = JsonConvert.DeserializeObject<Item>(result);
 
 				Debug.WriteLine(item.list[2]["main"]);
+			Debug.WriteLine(item.list[2]["weather"]);
 			//Debug.WriteLine(item.forecasts[0]["temperature"]);
 			//Debug.WriteLine(item.forecasts[0]["date"]);
-
-			Debug.WriteLine(JsonConvert.DeserializeObject(result).ToString());
 			return;
 		}
 	}
