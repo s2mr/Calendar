@@ -100,8 +100,8 @@ namespace Calendar
 			await ForecastManager.AsyncGetWebAPIData();
 			double maxValue = ForecastManager.getMaxTemperature();
 			double minValue = ForecastManager.getMinTemperature();
-			string max = string.Format("最高{0}℃", maxValue.ToString("F2"));
-			string min = string.Format("最高{0}℃", minValue.ToString("F2"));
+			string max = string.Format("最高{0}℃", maxValue.ToString("F1"));
+			string min = string.Format("最低{0}℃", minValue.ToString("F1"));
 
 			weatherImage.Source = ForecastManager.getWeatherIconName();
 			weatherLabel.Text = ForecastManager.getWeather();
