@@ -64,13 +64,29 @@ namespace Calendar
 
 		public static string getWeatherIconName()
 		{
-			var dict = item.list[2]["weather"] as JArray;
+			var dict = item.list[3]["weather"] as JArray;
 			var dict2 = dict[0].ToObject<Dictionary<String, Object>>();
 			var str = dict2["icon"].ToString();
 
 			return String.Format("http://openweathermap.org/img/w/{0}.png", str);
 
 			//return str;
+		}
+
+		public static string getWeather()
+		{
+			var dict = item.list[3]["weather"] as JArray;
+			var dict2 = dict[0].ToObject<Dictionary<String, Object>>();
+			var str = dict2["main"].ToString();
+			return str;
+		}
+
+		public static string getWeatherDetail()
+		{
+			var dict = item.list[3]["weather"] as JArray;
+			var dict2 = dict[0].ToObject<Dictionary<String, Object>>();
+			var str = dict2["description"].ToString();
+			return str;
 		}
 
 		// データを取得するメソッド
