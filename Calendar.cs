@@ -107,6 +107,19 @@ namespace Calendar
 			return label;
 		}
 
+		protected Label WeatherTempLabel(String title)
+		{
+			var label = new Label();
+			label.Text = title;
+			label.BackgroundColor = Color.White;
+			label.Opacity = 0.4;
+			label.FontSize = 30;
+			label.HorizontalTextAlignment = TextAlignment.Center;
+			label.VerticalTextAlignment = TextAlignment.Center;
+
+			return label;
+		}
+
 		private async void updateWeatherDaily()
 		{
 			await ForecastManager.AsyncGetWebAPIDataDaily();
@@ -120,6 +133,17 @@ namespace Calendar
 			weatherDetailLabel.Text = ForecastManager.getWeatherDetail();
 			maxTempLabel.Text = max;
 			minTempLabel.Text = min;
+
+			string[] array = ForecastManager.getTempArray();
+
+			tempLabel1.Text = array[0];
+			tempLabel2.Text = array[1];
+			tempLabel3.Text = array[2];
+			tempLabel4.Text = array[3];
+			tempLabel5.Text = array[4];
+			tempLabel6.Text = array[5];
+			tempLabel7.Text = array[6];
+			tempLabel8.Text = array[7];
 			return;
 		}
 
@@ -143,6 +167,15 @@ namespace Calendar
 
 		private void setupWeatherGrid()
 		{
+			tempLabel1 = new Label();
+			tempLabel2 = new Label();
+			tempLabel3 = new Label();
+			tempLabel4 = new Label();
+			tempLabel5 = new Label();
+			tempLabel6 = new Label();
+			tempLabel7 = new Label();
+			tempLabel8 = new Label();
+
 			weatherLabel = new Label
 			{
 				VerticalTextAlignment = TextAlignment.Center,
@@ -174,14 +207,26 @@ namespace Calendar
 				},
 				ColumnDefinitions = {
 					new ColumnDefinition { Width = GridLength.Star},
+					new ColumnDefinition { Width = GridLength.Star},
+					new ColumnDefinition { Width = GridLength.Star},
+					new ColumnDefinition { Width = GridLength.Star},
+					new ColumnDefinition { Width = GridLength.Star},
+					new ColumnDefinition { Width = GridLength.Star},
+					new ColumnDefinition { Width = GridLength.Star},
 					new ColumnDefinition { Width = GridLength.Star}
 				}
 			};
 
-			weatherGrid.Children.Add(weatherImage, 0, 0);
-			weatherGrid.Children.Add(weatherLabel, 1, 0);
-			weatherGrid.Children.Add(weatherDetailLabel, 1, 1);
-			Grid.SetRowSpan(weatherImage, 2);
+			weatherGrid.Children.Add(tempLabel1, 0, 1);
+			weatherGrid.Children.Add(tempLabel2, 1, 1);
+			weatherGrid.Children.Add(tempLabel3, 2, 1);
+			weatherGrid.Children.Add(tempLabel4, 3, 1);
+			weatherGrid.Children.Add(tempLabel5, 4, 1);
+			weatherGrid.Children.Add(tempLabel6, 5, 1);
+			weatherGrid.Children.Add(tempLabel7, 6, 1);
+			weatherGrid.Children.Add(tempLabel8, 7, 1);
+			//weatherGrid.Children.Add(weatherLabel, 1, 0);
+			//weatherGrid.Children.Add(weatherDetailLabel, 1, 1);
 		}
 
 		private void setupContent()
@@ -225,11 +270,12 @@ namespace Calendar
 
 			grid.Children.Add(label1, 1, 0); //２列目で左から１~２カラム
 			grid.Children.Add(trashLabel, 1, 1);//２列目で左から３カラム目
-			grid.Children.Add(TitleLabel("天気", Color.Orange), 1, 2);//0行1列
-			grid.Children.Add(maxTempLabel, 2, 2);//0行1列
+			grid.Children.Add(maxTempLabel, 1, 2);//0行1列
+			grid.Children.Add(minTempLabel, 2, 2);//0行1列
 			grid.Children.Add(weatherGrid, 1, 3);//0行1列
-			grid.Children.Add(minTempLabel, 2, 3);//0行1列
+			//grid.Children.Add(minTempLabel, 2, 3);//0行1列
 
+			Grid.SetColumnSpan(weatherGrid, 2);
 			Grid.SetColumnSpan(label1, 2);
 			Grid.SetColumnSpan(trashLabel, 2);
 		}

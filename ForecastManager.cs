@@ -127,7 +127,6 @@ namespace Calendar
 
 	public class Item
 	{
-
 		[JsonProperty(PropertyName = "list")]
 		 public IDictionary<String, Object>[] list { get; set; }
 	}
