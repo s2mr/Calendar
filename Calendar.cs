@@ -21,6 +21,15 @@ namespace Calendar
 		Label weatherLabel;
 		Label weatherDetailLabel;
 
+		Label tempLabel1;
+		Label tempLabel2;
+		Label tempLabel3;
+		Label tempLabel4;
+		Label tempLabel5;
+		Label tempLabel6;
+		Label tempLabel7;
+		Label tempLabel8;
+
 		DateManager dm;
 		TrashManager tm;
 
@@ -43,13 +52,15 @@ namespace Calendar
 				dateLabel.Text = date;
 				dayOfWeekLabel.Text = dayOfWeek;
 				timeLabel.Text = time;
-				trashLabel = tm.GetLabelKindOfTrash();
+				string kind = tm.GetTrashString();
+				trashLabel.Text = kind;
 				return true;
 			});
 
 			Device.StartTimer(TimeSpan.FromHours(2), () =>
 			{
-				updateWeather();
+				updateWeather3Hour();
+				updateWeatherDaily();
 				return true;
 			});
 
@@ -79,7 +90,8 @@ namespace Calendar
 
 		private void makeAsync()
 		{
-			updateWeather();
+			updateWeatherDaily();
+			updateWeather3Hour();
 		}
 
 		protected Label TitleLabel(String title, Color color)
@@ -95,9 +107,9 @@ namespace Calendar
 			return label;
 		}
 
-		private async void updateWeather()
+		private async void updateWeatherDaily()
 		{
-			await ForecastManager.AsyncGetWebAPIData();
+			await ForecastManager.AsyncGetWebAPIDataDaily();
 			double maxValue = ForecastManager.getMaxTemperature();
 			double minValue = ForecastManager.getMinTemperature();
 			string max = string.Format("最高{0}℃", maxValue.ToString("F1"));
@@ -108,6 +120,24 @@ namespace Calendar
 			weatherDetailLabel.Text = ForecastManager.getWeatherDetail();
 			maxTempLabel.Text = max;
 			minTempLabel.Text = min;
+			return;
+		}
+
+		private async void updateWeather3Hour()
+		{
+			await ForecastManager.AsyncGetWebAPIData3Hour();
+
+			ForecastManager.getTempArray();
+			//double maxValue = ForecastManager.getMaxTemperature();
+			//double minValue = ForecastManager.getMinTemperature();
+			//string max = string.Format("最高{0}℃", maxValue.ToString("F1"));
+			//string min = string.Format("最低{0}℃", minValue.ToString("F1"));
+
+			//weatherImage.Source = ForecastManager.getWeatherIconName();
+			//weatherLabel.Text = ForecastManager.getWeather();
+			//weatherDetailLabel.Text = ForecastManager.getWeatherDetail();
+			//maxTempLabel.Text = max;
+			//minTempLabel.Text = min;
 			return;
 		}
 
@@ -152,17 +182,18 @@ namespace Calendar
 			weatherGrid.Children.Add(weatherLabel, 1, 0);
 			weatherGrid.Children.Add(weatherDetailLabel, 1, 1);
 			Grid.SetRowSpan(weatherImage, 2);
-			//weatherLabel = TitleLabel("???", Color.Lime);
 		}
 
 		private void setupContent()
 		{
 
 			timeLabel = TitleLabel(dm.GetTimeString(), Color.Pink);
-			trashLabel = tm.GetLabelKindOfTrash();
+			trashLabel = TitleLabel(dm.GetTimeString(), Color.Pink);
 			var label1 = TitleLabel("今日は", Color.Olive);
 			maxTempLabel = TitleLabel("最高 ???", Color.Maroon);
+			maxTempLabel.FontSize = 60;
 			minTempLabel = TitleLabel("最低 ???", Color.Teal);
+			minTempLabel.FontSize = 60;
 
 			 grid = new Grid
 			{

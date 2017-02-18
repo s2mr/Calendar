@@ -9,7 +9,7 @@ namespace Calendar
 		{
 		}
 
-		public Label GetLabelKindOfTrash()
+		public String GetTrashString()
 		{
 			var date = DateTime.Now;
 			string kind = "";
@@ -45,10 +45,10 @@ namespace Calendar
 					kind = "普通ごみ";
 					break;
 				case DayOfWeek.Sunday:
-					kind = "";
+					kind = "休み";
 					break;
 				case DayOfWeek.Saturday:
-					kind = "";
+					kind = "休み";
 					break;
 				default:
 					break;
@@ -57,15 +57,17 @@ namespace Calendar
 			if (date.Month == 3 || date.Day == 20)
 				kind = "休み";
 
-			var label = new Label();
-			label.Text = kind + "の日";
+			return kind + "の日";
 
-			label.BackgroundColor = Color.White;
-			label.Opacity = 0.4;
-			label.FontSize = 70;
-			label.HorizontalTextAlignment = TextAlignment.Center;
-			label.VerticalTextAlignment = TextAlignment.Center;
-			return label;
+			//var label = new Label();
+			//label.Text = kind + "の日";
+
+			//label.BackgroundColor = Color.White;
+			//label.Opacity = 0.4;
+			//label.FontSize = 70;
+			//label.HorizontalTextAlignment = TextAlignment.Center;
+			//label.VerticalTextAlignment = TextAlignment.Center;
+			//return label;
 		}
 	}
 
