@@ -48,11 +48,11 @@ namespace Calendar
 				string date = dm.GetMonthStr() + "月" + dm.GetDayStr() + "日";
 				string time = dm.GetTimeString();
 				string dayOfWeek = dm.GetDayOfWeekStr() + "曜日";
+				string kind = tm.GetTrashString();
 				yearLabel.Text = year;
 				dateLabel.Text = date;
 				dayOfWeekLabel.Text = dayOfWeek;
 				timeLabel.Text = time;
-				string kind = tm.GetTrashString();
 				trashLabel.Text = kind;
 				return true;
 			});
@@ -195,7 +195,7 @@ namespace Calendar
 			minTempLabel = TitleLabel("最低 ???", Color.Teal);
 			minTempLabel.FontSize = 60;
 
-			 grid = new Grid
+			grid = new Grid
 			{
 				Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 10),//パディング
 				RowSpacing = 5, //縦のスペース
