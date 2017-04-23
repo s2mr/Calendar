@@ -14,7 +14,7 @@ namespace Calendar
 		public String GetTrashString()
 		{
 
-			var date = DateTime.Now;
+			var date = GetTodayTomorrowDate();
 			string kind = "";
 			switch (date.DayOfWeek)
 			{
@@ -45,7 +45,8 @@ namespace Calendar
 					else if (Paper.isPaper(date.Month, date.Day))
 					{
 						kind = "新聞・布（衣類）";
-					}else if (Middle.isMiddle(date.Month, date.Day))
+					}
+					else if (Middle.isMiddle(date.Month, date.Day))
 					{
 						kind = "中型ごみ";
 					}
@@ -64,16 +65,29 @@ namespace Calendar
 				kind = "休み";
 
 			return kind + "の日";
+		}
 
-			//var label = new Label();
-			//label.Text = kind + "の日";
+		public string GetTodayTomorrowString()
+		{
+			if (DateTime.Now.Day == GetTodayTomorrowDate().Day)
+			{
+				return "今日は";
 
-			//label.BackgroundColor = Color.White;
-			//label.Opacity = 0.4;
-			//label.FontSize = 70;
-			//label.HorizontalTextAlignment = TextAlignment.Center;
-			//label.VerticalTextAlignment = TextAlignment.Center;
-			//return label;
+			}
+			return "明日は";
+		}
+		private DateTime GetTodayTomorrowDate()
+		{
+			var date = DateTime.Now;
+
+			if (date.Hour < 12)
+			{
+				return date;
+			}
+			else
+			{
+				return date.AddDays(1.0);
+			}
 		}
 	}
 
