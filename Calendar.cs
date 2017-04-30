@@ -34,8 +34,6 @@ namespace Calendar
 			dm = new DateManager();
 			tm = new TrashManager();
 
-			PushNotificationManager a = new PushNotificationManager();
-
 			setupWeatherGrid();
 			setupContent();
 
@@ -53,6 +51,14 @@ namespace Calendar
 				timeLabel.Text = time;
 				trashLabel.Text = kind;
 				todayTomorrowLabel.Text = todayTomorrow;
+
+				string now = DateTime.Now.ToString("T");
+				var am9 = new TimeSpan(9, 0, 0).ToString("g");
+				var pm9 = new TimeSpan(21, 0, 0).ToString("g");
+				if ((now == am9) || (now == pm9))
+				{
+					PushNotificationManager.SendPushNotification();
+				}
 
 				return true;
 			});
@@ -128,16 +134,7 @@ namespace Calendar
 			await ForecastManager.AsyncGetWebAPIData3Hour();
 
 			ForecastManager.getTempArray();
-			//double maxValue = ForecastManager.getMaxTemperature();
-			//double minValue = ForecastManager.getMinTemperature();
-			//string max = string.Format("最高{0}℃", maxValue.ToString("F1"));
-			//string min = string.Format("最低{0}℃", minValue.ToString("F1"));
 
-			//weatherImage.Source = ForecastManager.getWeatherIconName();
-			//weatherLabel.Text = ForecastManager.getWeather();
-			//weatherDetailLabel.Text = ForecastManager.getWeatherDetail();
-			//maxTempLabel.Text = max;
-			//minTempLabel.Text = min;
 			return;
 		}
 
