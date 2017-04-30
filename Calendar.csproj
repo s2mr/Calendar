@@ -33,6 +33,7 @@
     <Compile Include="TrashManager.cs" />
     <Compile Include="ForecastManager.cs" />
     <Compile Include="PushNotificationManager.cs" />
+    <Compile Include="Config.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
