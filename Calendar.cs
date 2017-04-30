@@ -8,12 +8,13 @@ namespace Calendar
 	public class App : Application
 	{
 		Grid grid;
-		Label maxTempLabel;
-		Label minTempLabel;
-		Label timeLabel;
+
 		Label yearLabel;
 		Label dateLabel;
 		Label dayOfWeekLabel;
+		Label timeLabel;
+
+		Label todayTomorrowLabel;
 		Label trashLabel;
 
 		Grid weatherGrid;
@@ -21,14 +22,8 @@ namespace Calendar
 		Label weatherLabel;
 		Label weatherDetailLabel;
 
-		Label tempLabel1;
-		Label tempLabel2;
-		Label tempLabel3;
-		Label tempLabel4;
-		Label tempLabel5;
-		Label tempLabel6;
-		Label tempLabel7;
-		Label tempLabel8;
+		Label maxTempLabel;
+		Label minTempLabel;
 
 		DateManager dm;
 		TrashManager tm;
@@ -49,11 +44,14 @@ namespace Calendar
 				string time = dm.GetTimeString();
 				string dayOfWeek = dm.GetDayOfWeekStr() + "曜日";
 				string kind = tm.GetTrashString();
+				string todayTomorrow = tm.GetTodayTomorrowString();
 				yearLabel.Text = year;
 				dateLabel.Text = date;
 				dayOfWeekLabel.Text = dayOfWeek;
 				timeLabel.Text = time;
 				trashLabel.Text = kind;
+				todayTomorrowLabel.Text = todayTomorrow;
+
 				return true;
 			});
 
@@ -189,7 +187,7 @@ namespace Calendar
 
 			timeLabel = TitleLabel(dm.GetTimeString(), Color.Pink);
 			trashLabel = TitleLabel(dm.GetTimeString(), Color.Pink);
-			var label1 = TitleLabel("今日は", Color.Olive);
+			todayTomorrowLabel = TitleLabel("今日は", Color.Olive);
 			maxTempLabel = TitleLabel("最高 ???", Color.Maroon);
 			maxTempLabel.FontSize = 60;
 			minTempLabel = TitleLabel("最低 ???", Color.Teal);
@@ -223,14 +221,14 @@ namespace Calendar
 			grid.Children.Add(dayOfWeekLabel, 0, 2);//0行1列
 			grid.Children.Add(timeLabel, 0, 3);//0行1列
 
-			grid.Children.Add(label1, 1, 0); //２列目で左から１~２カラム
+			grid.Children.Add(todayTomorrowLabel, 1, 0); //２列目で左から１~２カラム
 			grid.Children.Add(trashLabel, 1, 1);//２列目で左から３カラム目
 			grid.Children.Add(TitleLabel("天気", Color.Orange), 1, 2);//0行1列
 			grid.Children.Add(maxTempLabel, 2, 2);//0行1列
 			grid.Children.Add(weatherGrid, 1, 3);//0行1列
 			grid.Children.Add(minTempLabel, 2, 3);//0行1列
 
-			Grid.SetColumnSpan(label1, 2);
+			Grid.SetColumnSpan(todayTomorrowLabel, 2);
 			Grid.SetColumnSpan(trashLabel, 2);
 		}
 	}
