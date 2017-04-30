@@ -34,6 +34,8 @@ namespace Calendar
 			dm = new DateManager();
 			tm = new TrashManager();
 
+			PushNotificationManager a = new PushNotificationManager();
+
 			setupWeatherGrid();
 			setupContent();
 
